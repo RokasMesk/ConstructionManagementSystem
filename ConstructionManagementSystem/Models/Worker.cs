@@ -1,9 +1,13 @@
-﻿namespace ConstructionManagementSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ConstructionManagementSystem.Models
 {
     public class Worker
     {
-        public int Id { get; set; }
+        [Key]
+        public int WorkerId { get; set; }
         public string? Name { get; set; }
+        public string? LastName { get; set; }
         public string? ContactInformation { get; set; }
     }
 }
