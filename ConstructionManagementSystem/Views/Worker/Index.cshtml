@@ -1,1 +1,28 @@
-﻿
+﻿@model List<Worker>
+
+
+<div class="container">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Number</th>
+                <th scope="col">Worker Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var worker in Model){
+            <tr>
+                <th scope="row">@worker.WorkerId</th>
+                <td>@worker.Name</td>
+                <td>@worker.LastName</td>
+                <td>@worker.Number</td>
+                <td>@worker.WorkTitle</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>

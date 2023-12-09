@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Construction.Models;
 using Construction.DataAccess.Repository;
+using Construction.DataAccess.Repository.IRepository;
 
 namespace ConstructionManagementSystem.Controllers
 {
     public class WorkerController : Controller
     {
-        private readonly UnitOfWork _db;
-        public WorkerController(UnitOfWork db)
+        private readonly IUnitOfWork _db;
+        public WorkerController(IUnitOfWork db)
         {
             _db = db;
         }

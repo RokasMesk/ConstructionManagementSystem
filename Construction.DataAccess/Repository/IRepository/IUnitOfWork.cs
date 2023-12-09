@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Construction.DataAccess.Repository.IRepository
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
+        IWorkerRepository Worker { get; }
+        void Save();
     }
 }
