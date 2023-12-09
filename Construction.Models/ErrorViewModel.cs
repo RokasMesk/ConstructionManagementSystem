@@ -1,4 +1,4 @@
-namespace ConstructionManagementSystem.Models
+namespace Construction.Models
 {
     public class ErrorViewModel
     {

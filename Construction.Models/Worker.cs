@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ConstructionManagementSystem.Models
+namespace Construction.Models
 {
     public class Worker
     {
