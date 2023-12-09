@@ -1,18 +1,21 @@
 ﻿using Construction.DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Construction.Models;
+using Construction.DataAccess.Repository;
+
 namespace ConstructionManagementSystem.Controllers
 {
     public class WorkerController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public WorkerController(ApplicationDbContext db)
+        private readonly UnitOfWork _db;
+        public WorkerController(UnitOfWork db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            return View();
+            var workersFromDb = _db.Worker.GetAll();
+            return View(workersFromDb);
         }
     }
 }
