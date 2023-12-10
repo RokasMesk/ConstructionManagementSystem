@@ -34,5 +34,31 @@ namespace ConstructionManagementSystem.Controllers
             }
             return View();
         }
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Worker obj = _db.Worker.GetFirstOrDefault(u => u.WorkerId == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Worker? obj = _db.Worker.GetFirstOrDefault(u => u.WorkerId == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Worker.Remove(obj);
+            _db.Save();
+            return RedirectToAction(nameof(Index));
+
+        }
     }
 }
