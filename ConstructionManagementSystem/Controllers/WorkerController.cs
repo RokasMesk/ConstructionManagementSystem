@@ -60,5 +60,30 @@ namespace ConstructionManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Worker? obj = _db.Worker.GetFirstOrDefault(u => u.WorkerId == id);
+            if (obj ==null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+             
+        }
+        [HttpPost]
+        public IActionResult Edit(Worker worker)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Worker.Update(worker);
+                _db.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
     }
 }
