@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Construction.Models;
 using Construction.DataAccess.Repository;
 using Construction.DataAccess.Repository.IRepository;
+using System.ComponentModel;
 
 namespace ConstructionManagementSystem.Controllers
 {
@@ -17,6 +18,21 @@ namespace ConstructionManagementSystem.Controllers
         {
             var workersFromDb = _db.Worker.GetAll();
             return View(workersFromDb);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Worker obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Worker.Add(obj);
+                _db.Save();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
