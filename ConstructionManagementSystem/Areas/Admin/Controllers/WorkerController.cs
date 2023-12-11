@@ -5,7 +5,7 @@ using Construction.DataAccess.Repository;
 using Construction.DataAccess.Repository.IRepository;
 using System.ComponentModel;
 
-namespace ConstructionManagementSystem.Controllers
+namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class WorkerController : Controller
@@ -68,12 +68,12 @@ namespace ConstructionManagementSystem.Controllers
                 return NotFound();
             }
             Worker? obj = _db.Worker.GetFirstOrDefault(u => u.WorkerId == id);
-            if (obj ==null)
+            if (obj == null)
             {
                 return NotFound();
             }
             return View(obj);
-             
+
         }
         [HttpPost]
         public IActionResult Edit(Worker worker)
