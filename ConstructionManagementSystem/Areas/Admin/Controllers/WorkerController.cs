@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 namespace ConstructionManagementSystem.Controllers
 {
+    [Area("Admin")]
     public class WorkerController : Controller
     {
         private readonly IUnitOfWork _db;
