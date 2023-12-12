@@ -1,10 +1,12 @@
 ﻿using Construction.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ConstructionManagementSystem.Areas.Employee.Controllers
+namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
-    [Area("Employee")]
+    [Authorize]
+    [Area("Admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -4,9 +4,11 @@ using Construction.Models;
 using Construction.DataAccess.Repository;
 using Construction.DataAccess.Repository.IRepository;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class WorkerController : Controller
     {

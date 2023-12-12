@@ -1,0 +1,15 @@
+﻿@model LoginVM
+<div class="container">
+    <h2>Login</h2>
+    <form method="post">
+        <div class="row">
+            
+            <input asp-for="Email" class="form-control border-0 shadow" placeholder="Email" />
+            <input asp-for="Password" class="form-control border-0 shadow" placeholder="Password" />
+        </div>
+        <!-- Add other necessary input fields (password, etc.) here -->
+        <div class="row">
+            <input type="submit" value="Login" />
+        </div>
+    </form>
+</div>
