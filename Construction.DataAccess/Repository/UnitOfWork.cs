@@ -13,11 +13,13 @@ namespace Construction.DataAccess.Repository
         private readonly ApplicationDbContext _db;
         public IWorkerRepository Worker { get; private set; }
         public IUserRepository User { get; private set; }
+        public IProjectRepository Project { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Worker = new WorkerRepository(_db);
             User = new UserRepository(_db);
+            Project = new ProjectRepository(_db);
         }
         public void Save()
         {

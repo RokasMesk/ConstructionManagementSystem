@@ -10,6 +10,7 @@ namespace Construction.DataAccess.Repository.IRepository
     {
         IWorkerRepository Worker { get; }
         IUserRepository User { get; }
+        IProjectRepository Project { get; }
         void Save();
     }
 }

@@ -13,11 +13,6 @@ namespace Construction.Models
         [Required]
         [DisplayName("Workers Last Name")]
         public string? LastName { get; set; }
-        [Required]
-        [DisplayName("Workers Number")]
-        public string? Number { get; set; }
-        [Required]
-        [DisplayName("Workers title")]
-        public string? WorkTitle { get; set; }
+        public string? Title { get; set; }
     }
 }

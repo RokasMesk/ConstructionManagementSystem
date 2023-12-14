@@ -1,8 +1,12 @@
 using Construction.DataAccess.Data;
 using Construction.DataAccess.Repository;
 using Construction.DataAccess.Repository.IRepository;
+using Construction.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +14,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
-    AddCookie(options =>
-    {
-        options.LoginPath = "/Admin/User/Login";
-        options.LogoutPath = "/Admin/User/Logout";
-    });
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/ApplicationUser/Login";
+
+    options.LogoutPath = $"/Identity/ApplicationUser/Login";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+builder.Services.AddScoped<IDbInit, DbInit>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("EmployeePolicy", policy => policy.RequireRole("Employee"));
+});
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 var app = builder.Build();
 
@@ -33,9 +45,17 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+SeedDataBase();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+void SeedDataBase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInit>();
+        dbInitializer.Initialize();
+    }
+}

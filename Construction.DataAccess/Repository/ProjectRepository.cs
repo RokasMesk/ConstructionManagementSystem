@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Construction.DataAccess.Repository
 {
-    public class UserRepository: Repository<ApplicationUser>, IUserRepository
+    public class ProjectRepository: Repository<Project>, IProjectRepository
     {
         private readonly ApplicationDbContext _db;
-        public UserRepository(ApplicationDbContext db) : base(db)
+        public ProjectRepository(ApplicationDbContext db) : base(db)
         {
             _db=db;
         }
-        public void Update(ApplicationUser obj)
+        public void Update(Project obj)
         {
-            _db.Users.Update(obj);
+            _db.Projects.Update(obj);
         }
     }
 }
