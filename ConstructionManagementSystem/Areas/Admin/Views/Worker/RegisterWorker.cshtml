@@ -49,6 +49,7 @@
                         <select asp-for="Role" asp-items="@Model.PossibleRoles" class="form-select">
                             <option disabled selected>--Select Role--</option>
                         </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row pt-2">
@@ -59,7 +60,6 @@
                         <a asp-controller="Worker" asp-action="Index" class="btn btn-outline-dark border-1 form-control">
                             Back To List
                         </a>
-                        <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
                     
                 </div>
