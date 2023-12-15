@@ -1,15 +1,15 @@
-﻿@*@model Worker
+﻿@model RegisterVM
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-secondary bg-dark ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white">
-                    Create Worker
+                    Create Worker and his account
                 </h2>
             </div>
         </div>
     </div>
-
+ 
     <div class="card-body">
         <form method="post">
             <div class="border p-3">
@@ -26,14 +26,29 @@
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 pb-2">
-                        <label asp-for="Number" class="ms-2 pb-1"></label>
-                        <input asp-for="Number" class="form-control border-0 shadow" placeholder="Number" />
-                        <span asp-validation-for="Number" class="text-danger"></span>
+                        <label asp-for="Title" class="ms-2 pb-1"></label>
+                        <input asp-for="Title" class="form-control border-0 shadow" placeholder="Title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 pb-2">
-                        <label asp-for="WorkTitle" class="ms-2 pb-1"></label>
-                        <input asp-for="WorkTitle" class="form-control border-0 shadow" placeholder="Title" />
-                        <span asp-validation-for="WorkTitle" class="text-danger"></span>
+                        <label asp-for="PhoneNumber" class="ms-2 pb-1"></label>
+                        <input asp-for="PhoneNumber" class="form-control border-0 shadow" placeholder="Phone Number" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 pb-2">
+                        <label asp-for="Email" class="ms-2 pb-1"></label>
+                        <input asp-for="Email" class="form-control border-0 shadow" placeholder="Email" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 pb-2">
+                        <label asp-for="Password" class="ms-2 pb-1"></label>
+                        <input asp-for="Password" type="password" class="form-control border-0 shadow" placeholder="Password" />
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6 mt-3">
+                        <select asp-for="Role" asp-items="@Model.PossibleRoles" class="form-select">
+                            <option disabled selected>--Select Role--</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row pt-2">
@@ -44,11 +59,17 @@
                         <a asp-controller="Worker" asp-action="Index" class="btn btn-outline-dark border-1 form-control">
                             Back To List
                         </a>
+                        <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
-
+                    
                 </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
         </form>
     </div>
 </div>
-*@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+ }

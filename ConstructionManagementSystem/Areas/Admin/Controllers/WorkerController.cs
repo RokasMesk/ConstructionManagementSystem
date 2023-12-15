@@ -5,6 +5,9 @@ using Construction.DataAccess.Repository;
 using Construction.DataAccess.Repository.IRepository;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Authorization;
+using Construction.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
@@ -13,26 +16,63 @@ namespace ConstructionManagementSystem.Areas.Admin.Controllers
     public class WorkerController : Controller
     {
         private readonly IUnitOfWork _db;
-        public WorkerController(IUnitOfWork db)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public WorkerController(IUnitOfWork db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
         public IActionResult Index()
         {
             var workersFromDb = _db.Worker.GetAll();
             return View(workersFromDb);
         }
-        public IActionResult Create()
+        public IActionResult RegisterWorker()
         {
-            return View();
+            var model = new RegisterVM
+            {
+                // Populate the list of roles
+                PossibleRoles = new List<SelectListItem>
+                {
+                new SelectListItem { Value = "Admin", Text = "Admin" },
+                new SelectListItem { Value = "Employee", Text = "Employee" }
+                }
+            };
+            return View(model);
         }
         [HttpPost]
-        public IActionResult Create(Worker obj)
+        public IActionResult RegisterWorker(RegisterVM obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Worker.Add(obj);
+                Worker worker = new Worker()
+                {
+                    Name = obj.Name,
+                    LastName = obj.LastName,
+                    Title = obj.Title,
+                    PhoneNumber = obj.PhoneNumber
+                };
+                _db.Worker.Add(worker);
                 _db.Save();
+                ApplicationUser user = new ApplicationUser()
+                {
+                    Email = obj.Email,
+                    WorkerId = worker.WorkerId,
+                    UserName = obj.Email,
+                };
+                var result = _userManager.CreateAsync(user, obj.Password).GetAwaiter().GetResult();
+                if (result.Succeeded)
+                {
+                    // Adding the "Admin" role to the admin user
+                    var fromDb = _userManager.FindByEmailAsync(obj.Email).GetAwaiter().GetResult();
+                    _userManager.AddToRoleAsync(fromDb, obj.Role).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Something went wrong, please try again");
+                }
                 return RedirectToAction("Index");
             }
             return View();

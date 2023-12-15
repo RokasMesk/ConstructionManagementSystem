@@ -14,7 +14,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    // Password options configuration
+    options.Password.RequireDigit = false; // Disables the requirement for a digit
+    options.Password.RequireLowercase = true; // You can set it to false to disable lowercase requirement
+    options.Password.RequireUppercase = false; // Disables the requirement for an uppercase letter
+    options.Password.RequireNonAlphanumeric = false; // Disables the requirement for a non-alphanumeric character
+    options.Password.RequiredLength = 6; // Set the minimum required password length
+
+    // Lockout settings
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+
+    // Other Identity configurations
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/ApplicationUser/Login";

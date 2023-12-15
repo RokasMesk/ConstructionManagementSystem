@@ -19,8 +19,6 @@ namespace ConstructionManagementSystem.Areas.Identity.Controllers
         }
         public IActionResult Login()
         {
-
-            Console.WriteLine("YRA");
             return View();
         }
 

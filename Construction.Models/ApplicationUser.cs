@@ -11,6 +11,7 @@ namespace Construction.Models
 {
     public class ApplicationUser:IdentityUser
     {
+        [Required]
         public int? WorkerId { get; set; }
         [ForeignKey("WorkerId")]
         [Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidateNever]

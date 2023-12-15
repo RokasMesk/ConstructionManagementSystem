@@ -1,4 +1,4 @@
-﻿@*@model List<Worker>
+﻿@model List<Worker>
 
 
 <div class="container">
@@ -18,9 +18,8 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col">Number</th>
                 <th scope="col">Worker Title</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Phone Number</th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +28,8 @@
                 <th scope="row">@worker.WorkerId</th>
                 <td>@worker.Name</td>
                 <td>@worker.LastName</td>
-                <td>@worker.Number</td>
-                <td>@worker.WorkTitle</td>
+                <td>@worker.Title</td>
+                <td>@worker.PhoneNumber</td>
                     <td>
                         <div class="w-75 btn-group" role="group">
                             <a asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.WorkerId" class="btn btn-primary btn-dark mx-2">
@@ -49,10 +48,9 @@
         <div class="col-6">
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Worker" asp-action="Create" class="btn btn-outline-dark mt-2">
+            <a asp-controller="Worker" asp-action="RegisterWorker" class="btn btn-outline-dark mt-2">
                 <i class="bi bi-plus-circle"></i>  Add a new worker
             </a>
         </div>
     </div>
 </div>
-*@

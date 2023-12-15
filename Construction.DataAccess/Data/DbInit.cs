@@ -29,25 +29,51 @@ namespace Construction.DataAccess.Data
                     _db.Database.Migrate();
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                
+            }
 
             if (!_roleManager.RoleExistsAsync("Employee").GetAwaiter().GetResult())
             {
-                Console.WriteLine("AAAAAAAAAAAAA");
+                // Creating roles if they don't exist
                 _roleManager.CreateAsync(new IdentityRole("Employee")).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-                //creating admin user as well
-                _userManager.CreateAsync(new ApplicationUser
+
+                // Creating an admin user if it doesn't exist
+                if (_userManager.FindByEmailAsync("admin@gmail.com").GetAwaiter().GetResult() == null)
                 {
-                    UserName = "admin@gmail.com",
-                    WorkerId = null,
-                    Email = "admin@gmail.com"
-                }, "Admin123#").GetAwaiter().GetResult();
-                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@gmail.com");
-                _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+                    var adminWorker = new Worker
+                    {
+                        Name = "Rokas",
+                        LastName = "Mesk",
+                        Title = "Admin",
+                        PhoneNumber = "+370606060"
+                    };
+
+                    _db.Workers.Add(adminWorker);
+                    _db.SaveChanges();
+
+                    var adminUser = new ApplicationUser
+                    {
+                        UserName = "admin@gmail.com",
+                        WorkerId = adminWorker.WorkerId, // Assign the WorkerId to the newly created Worker's Id
+                        Email = "admin@gmail.com"
+                    };
+
+                    var result = _userManager.CreateAsync(adminUser, "Admin123#").GetAwaiter().GetResult();
+
+                    if (result.Succeeded)
+                    {
+                        // Adding the "Admin" role to the admin user
+                        var user = _userManager.FindByEmailAsync("admin@gmail.com").GetAwaiter().GetResult();
+                        _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+                    }
+                    return;
+                }
             }
-            return;
         }
+
     }
 }
 
