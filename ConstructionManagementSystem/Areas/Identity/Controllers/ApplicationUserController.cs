@@ -34,7 +34,7 @@ namespace ConstructionManagementSystem.Areas.Identity.Controllers
                     if (result.Succeeded)
                     {
                         // Redirect to a success page or return a success message
-                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                        return RedirectToAction("Index", "Home", new { area = "Employee" });
 
                     }
                 }

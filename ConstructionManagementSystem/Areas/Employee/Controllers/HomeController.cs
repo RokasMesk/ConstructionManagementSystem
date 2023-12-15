@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
     [Authorize]
-    [Area("Admin")]
+    [Area("Employee")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ConstructionManagementSystem.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     public class WorkerController : Controller
     {

@@ -65,7 +65,7 @@ app.UseAuthorization();
 SeedDataBase();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Employee}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 void SeedDataBase()

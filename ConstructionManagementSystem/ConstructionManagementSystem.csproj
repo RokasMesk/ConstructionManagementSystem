@@ -23,8 +23,4 @@
     <ProjectReference Include="..\Construction.Utility\Construction.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Employee\Controllers\" />
-  </ItemGroup>
-
 </Project>
