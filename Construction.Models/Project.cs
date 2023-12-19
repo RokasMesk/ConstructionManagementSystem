@@ -16,9 +16,7 @@ namespace Construction.Models
         public string? ProjectDescription { get; set; } 
         public DateTime? StartDate { get; set; }
         public DateTime?  EndDate { get; set; } 
-        public int WorkerId { get; set; }
-        [ForeignKey(nameof(Worker))]
-        public ICollection<Worker> ProjectWorkers { get; set; }
+        public ICollection<Worker>? ProjectWorkers { get; set; }
 
     }
 }
