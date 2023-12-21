@@ -18,7 +18,7 @@ namespace Construction.Models
         public string? Title { get; set; }
         [Required]
         public string? PhoneNumber { get; set; }
-        public int ProjectId { get; set; }
-        public Project Project { get; set; }
+        public int? ProjectId { get; set; }
+        public Project? Project { get; set; }
     }
 }
